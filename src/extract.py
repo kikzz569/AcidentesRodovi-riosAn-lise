@@ -18,8 +18,8 @@ def extract():
     )
 
     #tipificando colunas
-    df['data_inversa'] = pd.to_datetime(df['data_inversa'], errors='coerce', dayfirst=True).dt.normalize()
-    df['horario'] = pd.to_datetime(df['horario'], format='%H:%M:%S', errors='coerce')
+    df['data_inversa'] = pd.to_datetime(df['data_inversa'], errors='coerce', dayfirst=True).dt.date
+    df['horario'] = pd.to_datetime(df['horario'], format='%H:%M:%S', errors='coerce').dt.time
     df['latitude'] = pd.to_numeric(df['latitude'], errors='coerce')
     df['longitude'] = pd.to_numeric(df['longitude'], errors='coerce')
 
@@ -30,3 +30,5 @@ def extract():
             df[col] = df[col].str.strip().str.upper()
 
     return df
+
+print('Base de dados extraido e limpo com sucesso')

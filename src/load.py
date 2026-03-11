@@ -9,7 +9,7 @@ def load(df):
             con = engine,
             if_exists = 'replace',
             index = False,
-            chunksize = 1000
+            chunksize = 5000
     )   
         print(f"Linhas: {len(df)}")
         print('Dados carregados com sucesso')
