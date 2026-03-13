@@ -3,7 +3,7 @@ import numpy as np
 
 def extract():
     #leitura do banco de dados
-    df = pd.read_csv("./data/acidentes_brasil.csv", sep=";", encoding="utf-8-sig", low_memory = False)
+    df = pd.read_csv("../data/acidentes_brasil.csv", sep=";", encoding="utf-8-sig", low_memory = False)
 
     #limpeza de duplicatas
     df = df.drop_duplicates()
@@ -29,6 +29,19 @@ def extract():
         if col in df.columns:
             df[col] = df[col].str.strip().str.upper()
 
-    return df
+    #Correção inconsistencia coluna "pessoas"
+    df["pessoas_corrigido"] = (
+    df["mortos"]
+    + df["feridos_graves"]
+    + df["feridos_leves"]
+    + df["ilesos"]
+    + df["ignorados"]
+)
+    inconsistentes = df[df["pessoas"] != df["pessoas_corrigido"]]
 
-print('Base de dados extraido e limpo com sucesso')
+    df["pessoas"] = df["pessoas_corrigido"]
+    df.drop(columns="pessoas_corrigido", inplace=True)
+
+    print('Base de dados extraido e limpo com sucesso')
+
+    return df

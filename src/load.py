@@ -2,11 +2,12 @@ from sqlalchemy import create_engine
 
 def load(df):
     try:
-        engine = create_engine('postgresql://postgres.azimreeippevyjdswfrm:Gaman_320790@aws-0-us-west-2.pooler.supabase.com:6543/postgres')
+        engine = create_engine('postgresql+psycopg2://postgres:Gaman569@localhost:5432/acidentes_brasil')
     
         df.to_sql(
             name = 'acidentes_silver',
             con = engine,
+            schema = 'silver',
             if_exists = 'replace',
             index = False,
             chunksize = 5000
